@@ -1,0 +1,51 @@
+--- a/crates/buzz-auth/src/bdcp.rs
++++ b/crates/buzz-auth/src/bdcp.rs
+@@ -0,0 +1,60 @@
++// ============================================================
++// N243 — BDCP Enforcement (PRD-005)
++// ============================================================
++
++use serde::{Deserialize, Serialize};
++use std::collections::HashMap;
++use std::path::Path;
++
++#[derive(Debug, Clone, Serialize, Deserialize)]
++pub struct RepoEntry {
++    pub name: String,
++    pub local_path: String,
++    pub stratum: String,
++    pub status: String,
++    pub upstream: Option<String>,
++    pub license: String,
++}
++
++#[derive(Debug, Clone, Serialize, Deserialize)]
++pub struct BDCPChecker {
++    pub known_repos: HashMap<String, RepoEntry>,
++}
++
++#[derive(Debug, Clone, Serialize, Deserialize, thiserror::Error)]
++pub enum BDCPError {
++    #[error("repo not declared: {0}")]
++    RepoNotDeclared(String),
++    #[error("repo already exists: {0}")]
++    RepoAlreadyExists(String),
++    #[error("invalid stratum: {0}")]
++    InvalidStratum(String),
++}
++
++impl BDCPChecker {
++    pub fn check_clone(&self, repo_name: &str, target_path: &Path) -> Result<(), BDCPError> {
++        if !self.known_repos.contains_key(repo_name) {
++            return Err(BDCPError::RepoNotDeclared(repo_name.to_string()));
++        }
++        if target_path.exists() {
++            return Err(BDCPError::RepoAlreadyExists(repo_name.to_string()));
++        }
++        let entry = &self.known_repos[repo_name];
++        if !entry.local_path.starts_with("D:/DO/WEB/TOOLS/L") {
++            return Err(BDCPError::InvalidStratum(entry.stratum.clone()));
++        }
++        Ok(())
++    }
++}

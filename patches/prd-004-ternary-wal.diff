@@ -1,0 +1,95 @@
+--- a/crates/buzz-audit/src/ternary_wal.rs
++++ b/crates/buzz-audit/src/ternary_wal.rs
+@@ -0,0 +1,100 @@
++// ============================================================
++// N243 — Ternary WAL (PRD-004)
++// ============================================================
++
++use serde::{Deserialize, Serialize};
++use uuid::Uuid;
++
++#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
++pub enum TernaryState {
++    Convergence,
++    Divergence,
++    Oscillation,
++}
++
++impl TernaryState {
++    pub fn to_score(&self) -> f32 {
++        match self {
++            TernaryState::Convergence => 1.0,
++            TernaryState::Oscillation => 0.5,
++            TernaryState::Divergence => 0.0,
++        }
++    }
++}
++
++#[derive(Debug, Clone, Serialize, Deserialize)]
++pub struct TernaryWALEntry {
++    pub id: Uuid,
++    pub timestamp: i64,
++    pub entity: String,
++    pub previous: TernaryState,
++    pub current: TernaryState,
++    pub reason: String,
++}
++
++#[derive(Debug, Clone, Serialize, Deserialize)]
++pub struct TernaryWAL {
++    pub entries: Vec<TernaryWALEntry>,
++    pub current_states: std::collections::HashMap<String, TernaryState>,
++}
++
++impl TernaryWAL {
++    pub fn new() -> Self {
++        Self {
++            entries: Vec::new(),
++            current_states: std::collections::HashMap::new(),
++        }
++    }
++
++    pub fn transition(
++        &mut self,
++        entity: &str,
++        from: TernaryState,
++        to: TernaryState,
++        reason: &str,
++    ) -> TernaryWALEntry {
++        let entry = TernaryWALEntry {
++            id: Uuid::new_v4(),
++            timestamp: chrono::Utc::now().timestamp(),
++            entity: entity.to_string(),
++            previous: from.clone(),
++            current: to.clone(),
++            reason: reason.to_string(),
++        };
++        self.entries.push(entry.clone());
++        self.current_states.insert(entity.to_string(), to);
++        entry
++    }
++
++    pub fn current_state(&self, entity: &str) -> Option<&TernaryState> {
++        self.current_states.get(entity)
++    }
++
++    pub fn history(&self, entity: &str) -> Vec<&TernaryWALEntry> {
++        self.entries.iter().filter(|e| e.entity == entity).collect()
++    }
++
++    pub fn detect_oscillations(&self, entity: &str) -> Vec<(&TernaryWALEntry, &TernaryWALEntry)> {
++        let mut pairs = Vec::new();
++        let history: Vec<&TernaryWALEntry> = self.history(entity);
++        for i in 0..history.len().saturating_sub(1) {
++            let a = &history[i];
++            let b = &history[i + 1];
++            if matches!((&a.current, &b.current), (TernaryState::Convergence, TernaryState::Oscillation))
++                || matches!((&a.current, &b.current), (TernaryState::Oscillation, TernaryState::Divergence))
++                || matches!((&a.current, &b.current), (TernaryState::Divergence, TernaryState::Oscillation))
++                || matches!((&a.current, &b.current), (TernaryState::Oscillation, TernaryState::Convergence)) {
++                pairs.push((a, b));
++            }
++        }
++        pairs
++    }
++}

@@ -1,0 +1,61 @@
+--- a/crates/buzz-workflow/src/ternary_actions.rs
++++ b/crates/buzz-workflow/src/ternary_actions.rs
+@@ -0,0 +1,80 @@
++// ============================================================
++// N243 — Ternary Workflow Actions (PRD-003)
++// ============================================================
++
++use serde::{Deserialize, Serialize};
++
++#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
++pub enum TernaryAction {
++    Approve,
++    Suspend,
++    Reject,
++}
++
++impl TernaryAction {
++    pub fn from_score(score: f32) -> Self {
++        if score >= 0.8 {
++            TernaryAction::Approve
++        } else if score >= 0.4 {
++            TernaryAction::Suspend
++        } else {
++            TernaryAction::Reject
++        }
++    }
++
++    pub fn to_score(&self) -> f32 {
++        match self {
++            TernaryAction::Approve => 1.0,
++            TernaryAction::Suspend => 0.5,
++            TernaryAction::Reject => 0.0,
++        }
++    }
++}
++
++#[derive(Debug, Clone, Serialize, Deserialize)]
++pub struct TernaryVote {
++    pub action: TernaryAction,
++    pub expert: String,
++    pub reasoning: String,
++}
++
++#[derive(Debug, Clone, Serialize, Deserialize)]
++pub struct TernaryActionConfig {
++    pub action: TernaryAction,
++    pub condition: Option<String>,
++    pub message: Option<String>,
++    pub timeout_secs: Option<u64>,
++    pub rollback_plan: Option<String>,
++}
++
++impl TernaryAction {
++    pub async fn execute(&self, context: &serde_json::Value) -> Result<(), String> {
++        match self {
++            TernaryAction::Approve => Ok(()),
++            TernaryAction::Suspend => Ok(()),
++            TernaryAction::Reject => Ok(()),
++        }
++    }
++}

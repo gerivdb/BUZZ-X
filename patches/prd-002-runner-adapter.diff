@@ -1,0 +1,138 @@
+--- a/crates/buzz-acp/src/runner_adapter.rs
++++ b/crates/buzz-acp/src/runner_adapter.rs
+@@ -0,0 +1,150 @@
++// ============================================================
++// N243 — Runner Protocol (PRD-002)
++// ============================================================
++
++use serde::{Deserialize, Serialize};
++use std::collections::HashMap;
++use std::process::{Command, Stdio};
++use std::time::Duration;
++use tokio::time::timeout;
++
++/// Représente un runner L* (LLUX, RLM-243, TIMX, ROOTX, TLM-CORE)
++#[derive(Debug, Clone, Serialize, Deserialize)]
++pub struct Runner {
++    pub name: String,
++    pub command: String,
++    pub args: Vec<String>,
++    pub timeout_secs: u64,
++    pub max_retries: u32,
++}
++
++/// Input pour l'invocation d'un runner
++#[derive(Debug, Clone, Serialize, Deserialize)]
++pub struct RunnerInput {
++    pub prompt: String,
++    pub context: serde_json::Value,
++    pub timeout_secs: Option<u64>,
++}
++
++/// Output d'un runner
++#[derive(Debug, Clone, Serialize, Deserialize)]
++pub struct RunnerOutput {
++    pub result: serde_json::Value,
++    pub events: Vec<NostrEvent>,
++    pub metrics: RunnerMetrics,
++}
++
++/// Métriques d'exécution d'un runner
++#[derive(Debug, Clone, Serialize, Deserialize)]
++pub struct RunnerMetrics {
++    pub latency_ms: u64,
++    pub tokens_used: Option<u64>,
++    pub memory_mb: Option<u64>,
++}
++
++/// État d'un runner
++#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
++pub enum RunnerStatus {
++    Active,
++    Idle,
++    Error(String),
++}
++
++/// Adapter pour invoquer un runner Zig via sous-process
++pub struct RunnerAdapter {
++    runner: Runner,
++}
++
++impl RunnerAdapter {
++    pub fn new(runner: Runner) -> Self {
++        Self { runner }
++    }
++
++    /// Invoque le runner avec un input donné.
++    pub async fn invoke(&self, input: RunnerInput) -> Result<RunnerOutput, RunnerError> {
++        let timeout_secs = input.timeout_secs.unwrap_or(self.runner.timeout_secs);
++        let input_json = serde_json::to_string(&input)?;
++
++        let mut cmd = Command::new(&self.runner.command);
++        cmd.args(&self.runner.args)
++           .arg("--acp")  // Mode ACP
++           .stdin(Stdio::piped())
++           .stdout(Stdio::piped())
++           .stderr(Stdio::piped());
++
++        let mut child = cmd.spawn()?;
++        let stdin = child.stdin.as_mut().ok_or(RunnerError::StdinError)?;
++        stdin.write_all(input_json.as_bytes())?;
++        stdin.flush()?;
++
++        let output = timeout(Duration::from_secs(timeout_secs), child.wait_with_output())
++            .await
++            .map_err(|_| RunnerError::Timeout)?;
++
++        if !output.status.success() {
++            let stderr = String::from_utf8_lossy(&output.stderr);
++            return Err(RunnerError::ExecutionError(stderr.to_string()));
++        }
++
++        let result: RunnerOutput = serde_json::from_slice(&output.stdout)?;
++        Ok(result)
++    }
++
++    /// Récupère le statut courant du runner.
++    pub async fn status(&self) -> RunnerStatus {
++        // TODO: Implémenter avec un fichier PID ou un socket
++        RunnerStatus::Idle
++    }
++
++    /// Arrête le runner.
++    pub async fn shutdown(&self) -> Result<(), RunnerError> {
++        // TODO: Implémenter l'arrêt propre
++        Ok(())
++    }
++}
++
++// ============================================================
++// Configuration YAML pour les runners
++// ============================================================
++
++/// Charge la configuration des runners depuis un fichier YAML.
++pub fn load_runners_config(path: &str) -> Result<HashMap<String, Runner>, RunnerError> {
++    let content = std::fs::read_to_string(path)?;
++    let config: HashMap<String, Runner> = serde_yaml::from_str(&content)?;
++    Ok(config)
++}
++
++// ============================================================
++// Erreurs
++// ============================================================
++
++#[derive(Debug, thiserror::Error)]
++pub enum RunnerError {
++    #[error("IO error: {0}")]
++    Io(#[from] std::io::Error),
++    #[error("Serialization error: {0}")]
++    Serialization(#[from] serde_json::Error),
++    #[error("YAML error: {0}")]
++    Yaml(#[from] serde_yaml::Error),
++    #[error("Timeout after {0}s")]
++    Timeout,
++    #[error("Stdin error")]
++    StdinError,
++    #[error("Execution error: {0}")]
++    ExecutionError(String),
++}

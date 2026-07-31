@@ -1,0 +1,37 @@
+--- a/crates/buzz-core/src/kind.rs
++++ b/crates/buzz-core/src/kind.rs
+@@ -580,6 +580,22 @@ pub const KIND_GIT_STATUS_DRAFT: u32 = 1633;
+     KIND_GIT_STATUS_DRAFT,
+ ];
+ 
++// ============================================================
++// N243 — Kinds L* pour runners, ternaire, BDCP
++// ============================================================
++
++/// Kind 40050 : Runner Status — État d'un runner L*
++pub const RUNNER_STATUS: u32 = 40050;
++
++/// Kind 40051 : Runner Invocation — Invocation d'un runner
++pub const RUNNER_INVOCATION: u32 = 40051;
++
++/// Kind 40052 : Ternary Decision — Décision ternaire
++pub const TERNARY_DECISION: u32 = 40052;
++
++/// Kind 40053 : Ternary WAL — Entrée WAL ternaire
++pub const TERNARY_WAL: u32 = 40053;
++
++/// Kind 40054 : Persona-Verse — Persona-Verse invoqué
++pub const PERSONA_VERSE: u32 = 40054;
++
++/// Kind 40055 : VFT Level — Niveau VFT (fractal)
++pub const VFT_LEVEL: u32 = 40055;
++
++/// Kind 40056 : BDCP Enforcement — Événement BDCP
++pub const BDCP_ENFORCEMENT: u32 = 40056;
++
++/// Kind 40057 : Community Stratum — Strate L* d'une community
++pub const COMMUNITY_STRATUM: u32 = 40057;
++
+ /// Returns `true` if `kind` is in the ephemeral range (20000–29999).
+ pub const fn is_ephemeral(kind: u32) -> bool {
+     kind >= EPHEMERAL_KIND_MIN && kind <= EPHEMERAL_KIND_MAX

@@ -2,8 +2,6 @@
 
 > Catalogue des hooks Git pour BUZZ-X.
 
-## 1. Hooks existants
-
 ### pre-commit
 - Vérification d'encodage UTF-8 sans BOM.
 - Pas de fichiers > 1 Mo.

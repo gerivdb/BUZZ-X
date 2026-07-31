@@ -2,8 +2,6 @@
 
 > Conventions Git pour BUZZ-X.
 
-## 1. Merge-base
-
 Trouver l'ancêtre commun entre deux branches :
 
 ```bash

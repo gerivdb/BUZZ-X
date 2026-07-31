@@ -2,8 +2,6 @@
 
 > Conventions de méta-orchestration Git pour BUZZ-X.
 
-## 1. Pas de submodules
-
 L'écosystème gerivdb n'utilise PAS de submodules Git. Utiliser `git subtree` si nécessaire, avec ADR.
 
 ## 2. Verrouillage

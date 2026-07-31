@@ -2,8 +2,6 @@
 
 > Conventions Git minimales pour BUZZ-X.
 
-## 1. Cross-Repo Flow
-
 Utiliser `git -C` pour toute opération sur ce repo depuis un autre chemin :
 
 ```bash

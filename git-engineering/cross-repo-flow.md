@@ -2,8 +2,6 @@
 
 > Conventions Git inter-répos pour BUZZ-X.
 
-## 1. Règle fondamentale : `git -C <path>`
-
 Ne jamais utiliser `cd` / `Set-Location` pour changer de repo. Chaque appel shell démarre dans le workspace root.
 
 ```bash

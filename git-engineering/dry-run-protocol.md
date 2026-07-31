@@ -2,8 +2,6 @@
 
 > Simulation avant action Git.
 
-## 1. Quand dry-run est obligatoire
-
 | Opération | Dry-run |
 |---|---|
 | `git push` vers `main` | ✅ Oui |

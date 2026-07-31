@@ -1,0 +1,31 @@
+---
+name: BUZZ-X
+description: "Overlay ECOS-CLI sur Buzz@block — extension Nostr agnostique avec citoyens psychologiques."
+version: "1.0.0"
+parent: unified-design
+inherits:
+  - psy-citizen-governance
+  - citizen-registry
+  - stratum-relay
+capabilities:
+  - name: psy-citizen-governance
+    parameters:
+      psy_patterns: [dual_symmetric, progressive_cascade, oscillating_equilibrium, resilient_baseline, multi_attractor_chaos, trauma_chaos_redemption]
+      states: [NOMINAL, DEGRADED, CHAOS, SYNTHESIS, SURVIVAL]
+      relapse_rule: Tout citoyen avec relapse_risk > 0 doit être surveillé par Alfred
+      disambiguation: required
+      conformity: CONFORME_NEXUS
+  - name: citizen-registry
+    parameters:
+      schema_version: "2.1"
+      total_repos: 47
+      priorities: [P0, P1, P2, P3]
+  - name: stratum-relay
+    parameters:
+      stratum_relay: STRATUM_RELAY.md
+      lifecycle: ACTIVE
+strate: L4_TOOLS
+status: active
+generated_by: unified-design/create_design.py
+generated_at: "2026-07-31T06:22:00"
+intent_hash: 0xBUZZ_X_DESIGN_20260731

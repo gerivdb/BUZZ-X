@@ -1,0 +1,43 @@
+---
+# REPO.yaml — BUZZ-X
+# Généré automatiquement — RSS-v2.3 conformité CITIZEN
+# 2026-07-31 — session CTULU Phase 28
+name: BUZZ-X
+type: citizen
+strate: L4
+lifecycle: ACTIVE
+rss_depth: 2
+profile: CITIZEN
+archived: false
+description: >
+  Overlay ECOS-CLI pour Buzz@block — extension Nostr agnostique qui s'intègre
+  dans Buzz@block via l'API Nostr/NIP-34, conçue pour rester indépendante
+  de la version Buzz@block installée.
+remote: gerivdb/BUZZ-X
+local_path: D:/DO/WEB/TOOLS/L4-TOOLS/BUZZ-X
+packages:
+  - id: buzz-ecos-integration
+    status: ACTIVE
+    tag: CONFORME_NEXUS
+  - id: github-copilot-ecos-integration
+    status: SUSPENDED
+    tag: HORS_NEXUS
+  - id: roo-code-ecos-integration
+    status: ARCHIVED
+    tag: HORS_NEXUS
+hub: gerivdb/GOVERNANCE-HUB
+stratum_relay: STRATUM_RELAY.md
+intent_primary: INTENT-260 (buzz-workflow-binder)
+dependencies_upstream:
+  - gerivdb/BRAIN-DOCS
+  - gerivdb/SKILLS
+  - gerivdb/MIMIR
+  - gerivdb/DOC-UNIV-DEV
+dependencies_downstream:
+  - gerivdb/Gitnote
+  - gerivdb/GERIBOOKING
+  - gerivdb/ECOS-VISION
+  - gerivdb/COMET
+rss_version: v2.3
+rss_compliance: PARTIAL  # docs/, config/, tests/ présents mais vides — à compléter via INTENT-260
+last_audit: '2026-07-31'

@@ -1,1 +1,16 @@
+# === Python ===
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+
+# === OS ===
+.DS_Store
+Thumbs.db
+
+# === Compiled ===
+*.so
+
+# === BUZZ-X specific ===
 Buzz@block/

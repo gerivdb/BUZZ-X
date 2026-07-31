@@ -1,0 +1,21 @@
+# BUZZ-X — citizens.yaml
+# Profil: CITIZEN / L4
+version: "1.0"
+intent_hash: "0xBUZZ_X_CITIZENS_20260801"
+
+repo:
+  name: "BUZZ-X"
+  stratum: "L4-TOOLS"
+  status: "active"
+  description: "Hôte de Buzz@block pour N243"
+
+citizens:
+  - name: "BuzzKeeper"
+    role: "maintainer"
+    description: "Responsable du clone Buzz@block et des patches L*"
+    phase: "maintenance"
+  
+  - name: "PatchManager"
+    role: "integrator"
+    description: "Applique les patches PRD-001 à PRD-005 sur Buzz@block"
+    phase: "integration"

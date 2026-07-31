@@ -1,14 +1,17 @@
 # Cross-Repo Flow — BUZZ-X
 
 > Conventions Git inter-répos pour BUZZ-X.
+> Références : ADR-007, INTENT-077.
+
+## 1. Règle fondamentale : `git -C <path>`
 
 Ne jamais utiliser `cd` / `Set-Location` pour changer de repo. Chaque appel shell démarre dans le workspace root.
 
 ```bash
 # OBLIGATOIRE
-git -C "D:/DO/WEB/TOOLS/L4-TOOLS/BUZZ-X" add "fichier"
-git -C "D:/DO/WEB/TOOLS/L4-TOOLS/BUZZ-X" commit -m "message"
-git -C "D:/DO/WEB/TOOLS/L4-TOOLS/BUZZ-X" push origin main
+git -C "<repo_path>" add "fichier"
+git -C "<repo_path>" commit -m "message"
+git -C "<repo_path>" push origin main
 ```
 
 ## 2. Cherry-pick inter-strates

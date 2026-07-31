@@ -1,14 +1,15 @@
 # Git Engineering — BUZZ-X
 
 > Conventions Git minimales pour BUZZ-X.
+> Références : ADR-007, INTENT-077.
 
 Utiliser `git -C` pour toute opération sur ce repo depuis un autre chemin :
 
 ```bash
-git -C "D:/DO/WEB/TOOLS/L4-TOOLS/BUZZ-X" status
-git -C "D:/DO/WEB/TOOLS/L4-TOOLS/BUZZ-X" add <fichier>
-git -C "D:/DO/WEB/TOOLS/L4-TOOLS/BUZZ-X" commit -m "message"
-git -C "D:/DO/WEB/TOOLS/L4-TOOLS/BUZZ-X" push origin main
+git -C "<repo_path>" status
+git -C "<repo_path>" add <fichier>
+git -C "<repo_path>" commit -m "message"
+git -C "<repo_path>" push origin main
 ```
 
 Ne jamais utiliser `cd` / `Set-Location` entre appels shell.

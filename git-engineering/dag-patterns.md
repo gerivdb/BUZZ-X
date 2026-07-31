@@ -1,6 +1,9 @@
 # DAG Patterns — BUZZ-X
 
 > Conventions Git pour BUZZ-X.
+> Références : ADR-007, INTENT-077.
+
+## 1. Merge-base
 
 Trouver l'ancêtre commun entre deux branches :
 

@@ -1,6 +1,9 @@
 # Hooks Catalog — BUZZ-X
 
 > Catalogue des hooks Git pour BUZZ-X.
+> Références : ADR-007, INTENT-077.
+
+## 1. Hooks existants
 
 ### pre-commit
 - Vérification d'encodage UTF-8 sans BOM.

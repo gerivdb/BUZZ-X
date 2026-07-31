@@ -1,6 +1,9 @@
 # Dry-Run Protocol — BUZZ-X
 
 > Simulation avant action Git.
+> Références : ADR-007, INTENT-077.
+
+## 1. Quand dry-run est obligatoire
 
 | Opération | Dry-run |
 |---|---|

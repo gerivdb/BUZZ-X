@@ -238,8 +238,8 @@ TRIX et KIX ne sont pas de simples consommateurs du bus Buzz. Ils en sont les **
 | **TRIX** (`D:\DO\WEB\TOOLS\L4-TOOLS\TRIX`) | **Repo** | **Runtime N+4, dispatch table 243, Git Arbiter - deploye localement** |
 | **KIX** (`D:\DO\WEB\TOOLS\L2-PLATFORM\KIX`) | **Repo** | **Orchestrateur cycle de vie runners RLM - deploye localement** |
 | **GeriCode** (`D:\DO\WEB\TOOLS\L2-PLATFORM\GeriCode`) | **Repo** | **Meta-repo L2-PLATFORM : config Agent Manager, KIX, TRIX bridges** |
-| `Buzz@block/crates/buzz-core/src/kind.rs` | Rust | **Kinds TRIX/KIX ajoutes (50001, 50002, 60001)** |
-| `Buzz@block/schema/trix-kix-extension.sql` | SQL | **Tables optionnelles TRIX/KIX (proposees, non deployees)** |
+| `Buzz@block/crates/buzz-core/src/kind.rs` | Rust | **Kinds TRIX/KIX ajoutes (50001, 50002, 60001) - encapsulation BUZZ-X, pas modifiable dans Buzz@block** |
+| `Buzz@block/schema/trix-kix-extension.sql` | SQL | **Tables optionnelles TRIX/KIX (overlay BUZZ-X, pas dans Buzz@block)** |
 
 ---
 

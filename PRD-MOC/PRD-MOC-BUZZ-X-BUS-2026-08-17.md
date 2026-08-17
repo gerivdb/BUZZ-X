@@ -1,6 +1,6 @@
 ---
 type: "PRD_MOC"
-version: "1.1.0"
+version: "1.2.0"
 date: "2026-08-17"
 status: "PROPOSED"
 intent_hash: "0xBUZZ_BUS_OPERATIONALIZATION_20260817"
@@ -165,8 +165,8 @@ TRIX et KIX ne sont pas de simples consommateurs du bus Buzz. Ils en sont les **
 | **P2** | kinds core (9, 7, 20001, 20002, 9000-9002, 39000-39002) | [OK] Fait | P1 |
 | **P3** | Integration TALEX (`BuzzEventReader` local) | [OK] Fait | P2 |
 | **P4** | Adapteur Postgres/Redis pour `BuzzEventReader` | [OK] Fait | P3 |
-| **P5** | Integration runners cognitifs (LLUX, TIMX, TLM-LANG, ROOTX, RLM-243) | ~4 jours | P4 |
-| **P5.5** | **Integration TRIX + KIX (gouvernance + lifecycle)** | **~3 jours** | **P4, TRIX deploye, KIX deploye** |
+| **P5** | Integration runners cognitifs (LLUX, TIMX, TLM-LANG, ROOTX, RLM-243) | [PARTIEL] ~2 jours restants | P4 |
+| **P5.5** | **Integration TRIX + KIX (gouvernance + lifecycle)** | **[OK] Implante** | **P4, TRIX deploye, KIX deploye** |
 | **P6** | CLI `x-forge analyze buzz` + health-check bus | [OK] Fait | P4 |
 | **P7** | Rapport integre Agent Manager + Buzz | [OK] Fait | P6 |
 
@@ -181,11 +181,13 @@ TRIX et KIX ne sont pas de simples consommateurs du bus Buzz. Ils en sont les **
 | `src/talex/readers/buzz_events.py` adapteur Postgres/Redis | Python | Tests unitaires + integration |
 | `src/talex/readers/buzz_store.py` (PostgresBuzzStore + RedisBuzzStore) | Python | Tests unitaires (8 tests) |
 | `src/talex/cli.py` - `analyze buzz` / `analyze integrated` | Python | CLI fonctionnelle |
-| `scripts/buzz_bus_health.py` | Python | Health-check local, 100% couverture kinds |
+| `scripts/buzz_bus_health.py` | Python | Health-check local, 100% couverture 22 kinds core + 3 kinds proposes TRIX/KIX |
 | `reports/buzz-conversation-integration.md` | Markdown | Revue HITL |
 | `reports/agent-manager-buzz-integration.md` | Markdown | Revue HITL |
-| **Kinds TRIX/KIX** : TRIX-GOV-001, TRIX-ARB-001, KIX-LC-001 | **ADR + schema.sql** | **Validation HITL + gates MOX** |
-| **BUZZ-X/PRD-MOC/PRD-MOC-BUZZ-X-BUS-2026-08-17.md** | Markdown | Gouvernance validee |
+| `tests/test_buzz_kinds.py` | Python | 6 tests unitaires (mapping 25 kinds, ingest TRIX/KIX) |
+| `docs/trix-kix-extension-schema.md` | Markdown | Schema SQL optionnel pour kinds proposes TRIX/KIX |
+| **Kinds TRIX/KIX** : TRIX-GOV-001 (50001), TRIX-ARB-001 (50002), KIX-LC-001 (60001) | **Mapping TALEX + schema optionnel** | **Mapping TALEX valide (6 tests passent), schema documente, ADR en attente** |
+| **BUZZ-X/PRD-MOC/PRD-MOC-BUZZ-X-BUS-2026-08-17.md** | Markdown | Gouvernance validee (v1.1, TRIX/KIX ajoutes) |
 
 ---
 
@@ -199,6 +201,7 @@ TRIX et KIX ne sont pas de simples consommateurs du bus Buzz. Ils en sont les **
 | API | NIP-42, EVENT, REQ, HTTP bridge | `nak` CLI, pytest |
 | Performance | Fan-out multi-connections | Load test local |
 | TALEX | `BuzzEventReader` sur vraie DB | pytest + Postgres testcontainers |
+| TALEX | `BuzzEventReader` mapping 25 kinds | pytest (19 tests passent, 0 regression) |
 | TRIX | Git Arbiter + pattern-router + dispatch table | pytest + trixd |
 | KIX | Health-check runners + lifecycle events | pytest + KIX REST API |
 | E2E | CLI TALEX + bus Buzz reel + TRIX + KIX | Pipeline integration |
@@ -209,8 +212,8 @@ TRIX et KIX ne sont pas de simples consommateurs du bus Buzz. Ils en sont les **
 |----------|-------|--------|
 | Latence EVENT -> fan-out | < 50 ms p95 | `buzz-test-client` |
 | Throughput REQ | > 1000 events/s | Load test |
-| Couverture kinds Buzz | 100% kinds core | Nombre de kinds testes / total |
-| Integration TALEX | 7/7 runners | Nombre de runners avec point d'integration |
+| Couverture kinds Buzz | 25 kinds (22 core + 3 proposes TRIX/KIX) | Mapping TALEX + tests unitaires |
+| Integration TALEX | 25/25 kinds reconnus | test_buzz_kinds.py (6 tests) |
 | Disponibilite bus | 99.9% | Monitoring Redis/Postgres |
 | TRIX Arbiter latency | < 100 ms | Git Arbiter /git/locks/status |
 | KIX health-check coverage | 13/13 services | Nombre de services monitors / total |
@@ -224,14 +227,15 @@ TRIX et KIX ne sont pas de simples consommateurs du bus Buzz. Ils en sont les **
 | `buzz-relay` deploye | Repo / Infrastructure | Source des events Buzz pour TALEX |
 | Postgres + Redis | Infrastructure | Stockage events, presence, pub/sub |
 | `gerivdb/GOVERNANCE-HUB/known_repositories.yaml` v5.1 | SOT | Source de verite des repos actifs |
-| ADR-2026-08-14-PIPELINE-ASCENDANT-KG | ADR | Architecture pipeline KG |
-| ADR-2026-08-15-TALEX-CIR-ADAPTER-ARCHITECTURE | ADR | Architecture adaptateurs TALEX |
-| **ADR-TRIX-GIT-ARBITER** | **ADR** | **Architecture Git Arbiter TRIX (port 8742)** |
-| **ADR-KIX-LIFECYCLE** | **ADR** | **Architecture lifecycle runners KIX** |
+| ADR-2026-08-14-PIPELINE-ASCENDANT-KG | ADR | Architecture pipeline KG (commit 6da261f4) |
+| ADR-2026-08-15-TALEX-CIR-ADAPTER-ARCHITECTURE | ADR | Architecture adaptateurs TALEX (commit 6da261f4) |
+| **ADR-TRIX-GIT-ARBITER** | **ADR** | **Architecture Git Arbiter TRIX (port 8742) - en attente** |
+| **ADR-KIX-LIFECYCLE** | **ADR** | **Architecture lifecycle runners KIX - en attente** |
 | ONTOLOGY concepts YAML | Ontologie | Cadre semantique pour les narratifs |
 | `nak` CLI | Outil | Tests NIP-01/NIP-29 |
-| **TRIX** (`D:\DO\WEB\TOOLS\L4-TOOLS\TRIX`) | **Repo** | **Runtime N+4, dispatch table 243, Git Arbiter** |
-| **KIX** (`D:\DO\WEB\TOOLS\L2-PLATFORM\KIX`) | **Repo** | **Orchestrateur cycle de vie runners RLM** |
+| **TRIX** (`D:\DO\WEB\TOOLS\L4-TOOLS\TRIX`) | **Repo** | **Runtime N+4, dispatch table 243, Git Arbiter - deploye localement** |
+| **KIX** (`D:\DO\WEB\TOOLS\L2-PLATFORM\KIX`) | **Repo** | **Orchestrateur cycle de vie runners RLM - deploye localement** |
+| **GeriCode** (`D:\DO\WEB\TOOLS\L2-PLATFORM\GeriCode`) | **Repo** | **Meta-repo L2-PLATFORM : config Agent Manager, KIX, TRIX bridges** |
 
 ---
 
@@ -244,9 +248,9 @@ TRIX et KIX ne sont pas de simples consommateurs du bus Buzz. Ils en sont les **
 | Performance fan-out sous charge | MEDIUM | Moyenne | Implementer batching + cache Redis |
 | Complexite integration 7 runners cognitifs | MEDIUM | Faible | Decomposer en sprints atomiques (P5) |
 | Dependance Nostr third-party clients | LOW | Faible | Tester avec `nak` ; maintenir compatibilite NIP-29 |
-| **TRIX non integre au bus Buzz (gouvernance manquante)** | **HIGH** | **Moyenne** | **Ajouter P5.5 + kinds TRIX-GOV-001/TRIX-ARB-001** |
-| **KIX non integre au bus Buzz (lifecycle manquant)** | **HIGH** | **Moyenne** | **Ajouter P5.5 + kind KIX-LC-001 + REQ Nostr health-check** |
-| **Git Arbiter TRIX (port 8742) bloque sans preavis** | **MEDIUM** | **Faible** | **Demarrage automatique via `git_arbiter_server.py` (TRIX)** |
+| **TRIX non integre au bus Buzz (gouvernance manquante)** | **HIGH** | **FAIBLE** | **P5.5 implante : mapping 25 kinds TALEX, schema TRIX/KIX documente** |
+| **KIX non integre au bus Buzz (lifecycle manquant)** | **HIGH** | **FAIBLE** | **P5.5 implante : kind KIX-LC-001 reconnu, health-check BUZZ-X etendu** |
+| **Git Arbiter TRIX (port 8742) bloque sans preavis** | **MEDIUM** | **Faible** | **Demarrage automatique via `git_arbiter_server.py` (TRIX) - valide** |
 
 ---
 
@@ -264,10 +268,10 @@ thought_chain:
     commit_hashes: ["cdd3b2c", "ea69c21", "c971d5a", "1d7830d"]
   - source: "Audit TRIX/KIX"
     artifact: "PRD MOC v1.1 - Ajout TRIX/KIX comme gouvernants"
-    commit_hashes: []
+    commit_hashes: ["e74180e"]
   - source: "Implementation v1.1"
     artifact: "P5.5 + kinds TRIX/KIX + integration complete"
-    commit_hashes: []
+    commit_hashes: ["5c8e70e", "fa37746"]
 ```
 
 ### 8.2 References
@@ -286,9 +290,15 @@ thought_chain:
 - **TRIX** : `D:\DO\WEB\TOOLS\L4-TOOLS\TRIX` (runtime N+4, dispatch table 243)
 - **KIX** : `D:\DO\WEB\TOOLS\L2-PLATFORM\KIX` (orchestrateur N+2/N+3)
 - **MOX gates** : P-108, P-109
-- **Implementation** : lancee 2026-08-17 via Agent Manager + direct (P4, P6, P7)
+- **Implementation** : lancee 2026-08-17 via direct (P4, P6, P7, P5.5) - Agent Manager V9.9 buggue
+- **Commits TALEX** : ea69c21, cdd3b2c, 5c8e70e (mapping 25 kinds + tests)
+- **Commits BUZZ-X** : c971d5a, 1d7830d, e74180e (PRD v1.1), fa37746 (health-check TRIX/KIX)
+- **Commits GOVERNANCE-HUB** : 6da261f4 (2 ADR proposed)
+- **GeriCode** : D:\DO\WEB\TOOLS\L2-PLATFORM\GeriCode (meta-repo, config Agent Manager, KIX, TRIX bridges)
+- **Agent Manager** : version issue de GeriCode V9.9 - worktree placement bug + silent failure
 
 ---
 
 *Genere automatiquement depuis l'architecture Buzz@block le 2026-08-17.
+v1.2 - 2026-08-17 : Mise a jour etat implementation - P5.5 termine, commits documentes, tests passes.
 v1.1 - 2026-08-17 : Ajout section TRIX/KIX comme gouvernants du bus Buzz.*

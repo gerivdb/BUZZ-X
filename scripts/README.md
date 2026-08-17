@@ -162,3 +162,25 @@ Voir `reports/agent-manager-buzz-integration.md` pour :
 - Plan de test integration (pytest)
 - Diagramme ASCII du flux
 - References ADR-2026-08-14 et ADR-2026-08-15
+
+---
+
+## Kinds proposes TRIX/KIX (PRD v1.1)
+
+Les kinds suivants sont proposes dans le PRD MOC v1.1 mais ne sont pas
+encore deployes. Ils necessitent des ADR dedies avant integration.
+
+| Kind | Libelle | Composant | Usage | ADR associe |
+|------|---------|-----------|-------|-------------|
+| 50001 | TRIX governance event | TRIX (N+4) | Evenements de gouvernance (validation ADR, pattern-router, gates) | ADR-TRIX-GOVERNANCE |
+| 50002 | TRIX arbiter lock | TRIX (N+4) | Verrous Git Arbiter (port 8742), etat du clapet BDCP | ADR-TRIX-ARBITER |
+| 60001 | KIX runner lifecycle | KIX (N+2/N+3) | Cycle de vie des runners RLM (start/stop/heartbeat) | ADR-KIX-LIFECYCLE |
+
+### Schema optionnel
+
+Voir `docs/trix-kix-extension-schema.md` pour les tables Postgres proposees :
+- `trix_governance_events`
+- `arbiter_locks`
+- `kix_runner_lifecycle`
+
+Ces tables ne seront creees qu'apres acceptation des ADR correspondants.

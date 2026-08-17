@@ -116,6 +116,13 @@ PRD_KINDS: dict[int, str] = {
     44101: "Membership removed",
 }
 
+# Kinds proposes TRIX/KIX (PRD v1.1) - non deployes, ADR en attente.
+PROPOSED_KINDS: dict[int, str] = {
+    50001: "TRIX governance event",
+    50002: "TRIX arbiter lock",
+    60001: "KIX runner lifecycle",
+}
+
 # Kinds du PRD stockes en Redis (ephemeres) -> non attendus en Postgres.
 REDIS_BACKED_KINDS: set[int] = {20001, 20002}
 
@@ -341,7 +348,17 @@ def render_markdown(report: HealthReport) -> str:
         for k in report.kinds_uncovered:
             lines.append(f"- `{k}` - {PRD_KINDS.get(k, 'kind PRD')}")
     else:
-        lines.append("_Tous les kinds persistants du PRD sont couverts._")
+        lines.append("_Tous les kinds operationnels du PRD sont couverts._")
+    lines.append("")
+
+    # Section TRIX/KIX proposes
+    lines.append("## Kinds proposes (TRIX/KIX - PRD v1.1)\n")
+    lines.append("_Ces kinds ne sont pas encore deployes. Ils necessitent des ADR dedies._\n")
+    lines.append("| Kind | Libelle | Statut | ADR associe |")
+    lines.append("|------|---------|--------|-------------|")
+    lines.append("| 50001 | TRIX governance event | PROPOSED | ADR-TRIX-GOVERNANCE |")
+    lines.append("| 50002 | TRIX arbiter lock | PROPOSED | ADR-TRIX-ARBITER |")
+    lines.append("| 60001 | KIX runner lifecycle | PROPOSED | ADR-KIX-LIFECYCLE |")
     lines.append("")
 
     lines.append("## Avertissements\n")

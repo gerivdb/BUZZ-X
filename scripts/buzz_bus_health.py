@@ -352,13 +352,13 @@ def render_markdown(report: HealthReport) -> str:
     lines.append("")
 
     # Section TRIX/KIX proposes
-    lines.append("## Kinds proposes (TRIX/KIX - PRD v1.1)\n")
-    lines.append("_Ces kinds ne sont pas encore deployes. Ils necessitent des ADR dedies._\n")
+    lines.append("## Kinds TRIX/KIX (PRD v1.5)\n")
+    lines.append("_Ces kinds sont acceptes (ADR accepted). Tables ajoutees dans schema.sql._\n")
     lines.append("| Kind | Libelle | Statut | ADR associe |")
     lines.append("|------|---------|--------|-------------|")
-    lines.append("| 50001 | TRIX governance event | PROPOSED | ADR-TRIX-GOVERNANCE |")
-    lines.append("| 50002 | TRIX arbiter lock | PROPOSED | ADR-TRIX-ARBITER |")
-    lines.append("| 60001 | KIX runner lifecycle | PROPOSED | ADR-KIX-LIFECYCLE |")
+    lines.append("| 50001 | TRIX governance event | ACCEPTED | ADR-2026-08-17-001-TRIX-GIT-ARBITER |")
+    lines.append("| 50002 | TRIX arbiter lock | ACCEPTED | ADR-2026-08-17-001-TRIX-GIT-ARBITER |")
+    lines.append("| 60001 | KIX runner lifecycle | ACCEPTED | ADR-2026-07-27-016-kix-orchestrator |")
     lines.append("")
 
     lines.append("## Avertissements\n")
@@ -424,9 +424,8 @@ def main(argv: Optional[list[str]] = None) -> int:
     args = parser.parse_args(argv)
 
     # Resolution des chemins.
-    # BUZZ-X repo root = parents[4] depuis scripts/ (scripts -> worktree ->
-    # .kilo -> worktrees -> BUZZ-X). Buzz@block et PRD-MOC y sont inclus.
-    buzzblock_root = Path(__file__).resolve().parents[4]
+    # BUZZ-X repo root = parents[1] depuis scripts/ (scripts -> BUZZ-X).
+    buzzblock_root = Path(__file__).resolve().parents[1]
     buzzblock = args.buzzblock or buzzblock_root / "Buzz@block"
     default_schema, default_kindrs, default_prd = build_default_paths(buzzblock)
     schema_path = args.schema or default_schema

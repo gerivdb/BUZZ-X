@@ -95,3 +95,70 @@ Le health-check valide :
 
 Rapport d'integration associe :
 `reports/buzz-conversation-integration.md`.
+
+---
+
+## Integration Agent Manager V9.10
+
+### Principe
+
+Agent Manager V9.10 publie et consomme des evenements Buzz pour tracer
+son cycle de vie de session. Tout passe par le `buzz-relay` : aucune
+session ne communique directement avec Postgres ou Redis.
+
+### Kinds utilises par Agent Manager
+
+| Kind | Libelle | Hook Agent Manager |
+|------|---------|--------------------|
+| 9007 | Group creation | start_session |
+| 9008 | Group deletion | end_session |
+| 9 | Stream message | start_session, retry, error |
+| 7 | Reaction | end_session (success) |
+| 20001 | Presence | start_session, end_session |
+| 20002 | Typing | start_session |
+| 5 | Deletion | error |
+| 44100 | Membership added | start_session |
+| 44101 | Membership removed | end_session |
+
+### Workflow type
+
+```
+start_session
+  -> EVENT kind=9007 (group creation)
+  -> EVENT kind=9000 (add user)
+  -> EVENT kind=39000 (group metadata)
+  -> EVENT kind=39002 (group members)
+  -> EVENT kind=44100 (membership added)
+  -> EVENT kind=20002 (typing)
+  -> EVENT kind=20001 (presence)
+
+end_session
+  -> EVENT kind=9008 (group deletion)
+  -> EVENT kind=9001 (remove user)
+  -> EVENT kind=44101 (membership removed)
+  -> EVENT kind=7 (reaction confirmation)
+
+error
+  -> EVENT kind=5 (deletion / audit)
+  -> EVENT kind=9 (message explicatif)
+
+retry
+  -> EVENT kind=9 (message de retry avec delai)
+```
+
+### Securite BDCP
+
+Le bus Buzz ne sort pas du reseau local. Le health-check local
+(`python buzz_bus_health.py`) valide la coherence sans Docker ni reseau.
+Les credentials sont stockes en `.env` local (non commite). Redis presence
+(20001) et typing (20002) sont ephemeres (TTL respectif 180s et 60s) et
+ne sont jamais persistes en Postgres.
+
+### Rapport detaille
+
+Voir `reports/agent-manager-buzz-integration.md` pour :
+- Mapping complet kinds -> hooks
+- Architecture de securite BDCP
+- Plan de test integration (pytest)
+- Diagramme ASCII du flux
+- References ADR-2026-08-14 et ADR-2026-08-15

@@ -231,13 +231,15 @@ TRIX et KIX ne sont pas de simples consommateurs du bus Buzz. Ils en sont les **
 | `gerivdb/GOVERNANCE-HUB/known_repositories.yaml` v5.1 | SOT | Source de verite des repos actifs |
 | ADR-2026-08-14-PIPELINE-ASCENDANT-KG | ADR | Architecture pipeline KG (commit 6da261f4) |
 | ADR-2026-08-15-TALEX-CIR-ADAPTER-ARCHITECTURE | ADR | Architecture adaptateurs TALEX (commit 6da261f4) |
-| **ADR-TRIX-GIT-ARBITER** | **ADR** | **Architecture Git Arbiter TRIX (port 8742) - en attente** |
-| **ADR-KIX-LIFECYCLE** | **ADR** | **Architecture lifecycle runners KIX - en attente** |
+| **ADR-TRIX-GIT-ARBITER** | **ADR** | **Proposed (commit e7ddfd47, GOVERNANCE-HUB) - Git Arbiter port 8742** |
+| **ADR-KIX-LIFECYCLE** | **ADR** | **Proposed (commit ADR-2026-07-27-016) - Orchestrateur cycle de vie runners** |
 | ONTOLOGY concepts YAML | Ontologie | Cadre semantique pour les narratifs |
 | `nak` CLI | Outil | Tests NIP-01/NIP-29 |
 | **TRIX** (`D:\DO\WEB\TOOLS\L4-TOOLS\TRIX`) | **Repo** | **Runtime N+4, dispatch table 243, Git Arbiter - deploye localement** |
 | **KIX** (`D:\DO\WEB\TOOLS\L2-PLATFORM\KIX`) | **Repo** | **Orchestrateur cycle de vie runners RLM - deploye localement** |
 | **GeriCode** (`D:\DO\WEB\TOOLS\L2-PLATFORM\GeriCode`) | **Repo** | **Meta-repo L2-PLATFORM : config Agent Manager, KIX, TRIX bridges** |
+| `Buzz@block/crates/buzz-core/src/kind.rs` | Rust | **Kinds TRIX/KIX ajoutes (50001, 50002, 60001)** |
+| `Buzz@block/schema/trix-kix-extension.sql` | SQL | **Tables optionnelles TRIX/KIX (proposees, non deployees)** |
 
 ---
 

@@ -129,11 +129,11 @@ TALEX dispose deja d'un `BuzzEventReader` capable de parser des events Buzz simu
 | 39002 | Group members | [OK] | discovery | membres runners (KIX) |
 | 44100 | Membership added | [OK] | notification | notification adhesion runner (KIX) |
 | 44101 | Membership removed | [OK] | notification | notification depart runner (KIX) |
-| **TRIX-GOV-001** | **Governance event** | **PROPOSED** | **N/A** | **ADR validation, pattern-router decision** |
-| **TRIX-ARB-001** | **Arbiter lock** | **PROPOSED** | **N/A** | **Git Arbiter lock acquisition/release** |
-| **KIX-LC-001** | **Runner lifecycle** | **PROPOSED** | **N/A** | **Start/stop/heartbeat runners RLM** |
+| **TRIX-GOV-001** | **Governance event** | **[OK] Accepted** | **N/A** | **ADR validation, pattern-router decision** |
+| **TRIX-ARB-001** | **Arbiter lock** | **[OK] Accepted** | **N/A** | **Git Arbiter lock acquisition/release** |
+| **KIX-LC-001** | **Runner lifecycle** | **[OK] Accepted** | **N/A** | **Start/stop/heartbeat runners RLM** |
 
-**Note** : Les kinds TRIX-GOV-001, TRIX-ARB-001 et KIX-LC-001 sont proposes pour couvrir les processus gouvernants TRIX et KIX. Ils necessitent une validation HITL et des ADR dedies.
+**Note** : Les kinds TRIX-GOV-001, TRIX-ARB-001 et KIX-LC-001 sont acceptes (ADR accepted). Tables ajoutees dans schema.sql (Buzz@block commit 9a63f7f6b).
 
 ### 3.3 Architecture TRIX/KIX - Bus Buzz
 
@@ -231,8 +231,8 @@ TRIX et KIX ne sont pas de simples consommateurs du bus Buzz. Ils en sont les **
 | `gerivdb/GOVERNANCE-HUB/known_repositories.yaml` v5.1 | SOT | Source de verite des repos actifs |
 | ADR-2026-08-14-PIPELINE-ASCENDANT-KG | ADR | Architecture pipeline KG (commit 6da261f4) |
 | ADR-2026-08-15-TALEX-CIR-ADAPTER-ARCHITECTURE | ADR | Architecture adaptateurs TALEX (commit 6da261f4) |
-| **ADR-TRIX-GIT-ARBITER** | **ADR** | **Proposed (commit e7ddfd47, GOVERNANCE-HUB) - Git Arbiter port 8742** |
-| **ADR-KIX-LIFECYCLE** | **ADR** | **Proposed (commit ADR-2026-07-27-016) - Orchestrateur cycle de vie runners** |
+| **ADR-TRIX-GIT-ARBITER** | **ADR** | **Accepted (commit 76abb2cd, GOVERNANCE-HUB)** |
+| **ADR-KIX-LIFECYCLE** | **ADR** | **Accepted (commit 043deed8, GOVERNANCE-HUB)** |
 | ONTOLOGY concepts YAML | Ontologie | Cadre semantique pour les narratifs |
 | `nak` CLI | Outil | Tests NIP-01/NIP-29 |
 | **TRIX** (`D:\DO\WEB\TOOLS\L4-TOOLS\TRIX`) | **Repo** | **Runtime N+4, dispatch table 243, Git Arbiter - deploye localement** |
@@ -304,6 +304,7 @@ thought_chain:
 ---
 
 *Genere automatiquement depuis l'architecture Buzz@block le 2026-08-17.
+v1.5 - 2026-08-17 : ADR TRIX/KIX accepted + tables ajoutees dans schema.sql.
 v1.4 - 2026-08-17 : Implementation TRIX/KIX dans Buzz@block (kind.rs + schema SQL optionnel).
 v1.3 - 2026-08-17 : P5 complete + ADR Git Arbiter.
 v1.2 - 2026-08-17 : Mise a jour etat implementation - P5.5 termine, commits documentes, tests passes.

@@ -1,6 +1,6 @@
 ---
 type: "PRD_MOC"
-version: "1.2.0"
+version: "1.4.0"
 date: "2026-08-17"
 status: "PROPOSED"
 intent_hash: "0xBUZZ_BUS_OPERATIONALIZATION_20260817"
@@ -10,7 +10,7 @@ mox_gates:
   - P-109
 ---
 
-# PRD MOC - BUZZ-X - Operationnalisation du Bus Buzz (v1.1 - TRIX/KIX)
+# PRD MOC - BUZZ-X - Operationnalisation du Bus Buzz (v1.4 - Buzz@block kinds)
 
 ## 1. RESUME EXECUTIF
 
@@ -304,5 +304,7 @@ thought_chain:
 ---
 
 *Genere automatiquement depuis l'architecture Buzz@block le 2026-08-17.
+v1.4 - 2026-08-17 : Implementation TRIX/KIX dans Buzz@block (kind.rs + schema SQL optionnel).
+v1.3 - 2026-08-17 : P5 complete + ADR Git Arbiter.
 v1.2 - 2026-08-17 : Mise a jour etat implementation - P5.5 termine, commits documentes, tests passes.
 v1.1 - 2026-08-17 : Ajout section TRIX/KIX comme gouvernants du bus Buzz.*

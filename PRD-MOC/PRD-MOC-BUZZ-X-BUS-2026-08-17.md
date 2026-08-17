@@ -1,6 +1,6 @@
 ---
 type: "PRD_MOC"
-version: "1.4.0"
+version: "1.5.0"
 date: "2026-08-17"
 status: "PROPOSED"
 intent_hash: "0xBUZZ_BUS_OPERATIONALIZATION_20260817"
@@ -10,7 +10,7 @@ mox_gates:
   - P-109
 ---
 
-# PRD MOC - BUZZ-X - Operationnalisation du Bus Buzz (v1.4 - Buzz@block kinds)
+# PRD MOC - BUZZ-X - Operationnalisation du Bus Buzz (v1.5 - Implementation complete)
 
 ## 1. RESUME EXECUTIF
 
@@ -294,17 +294,18 @@ thought_chain:
 - **TRIX** : `D:\DO\WEB\TOOLS\L4-TOOLS\TRIX` (runtime N+4, dispatch table 243)
 - **KIX** : `D:\DO\WEB\TOOLS\L2-PLATFORM\KIX` (orchestrateur N+2/N+3)
 - **MOX gates** : P-108, P-109
-- **Implementation** : lancee 2026-08-17 via direct (P4, P6, P7, P5.5) - Agent Manager V9.9 buggue
-- **Commits TALEX** : ea69c21, cdd3b2c, 5c8e70e (mapping 25 kinds + tests)
-- **Commits BUZZ-X** : c971d5a, 1d7830d, e74180e (PRD v1.1), fa37746 (health-check TRIX/KIX)
-- **Commits GOVERNANCE-HUB** : 6da261f4 (2 ADR proposed)
+- **Implementation** : lancee 2026-08-17 via direct (P4, P5, P5.5, P6, P7) - Agent Manager V9.9 buggue
+- **Commits TALEX** : ea69c21 (CLI), cdd3b2c (store), 5c8e70e (kinds 25 + tests), 4a67169 (P5 runner tests)
+- **Commits BUZZ-X** : fa37746 (health-check), e25e9bb (PRD v1.3), aa15b80 (PRD v1.4), 940e012 (PRD v1.5), a138cc9 (overlay encapsulation)
+- **Commits GOVERNANCE-HUB** : 6da261f4 (2 ADR proposed), e7ddfd47 (ADR Git Arbiter proposed), 76abb2cd (ADR Git Arbiter accepted), 043deed8 (ADR KIX accepted)
+- **Buzz@block** : repo encapsule non modifiable, kinds TRIX/KIX definis dans BUZZ-X overlay (KINDS_TRIX_KIX_EXTENSION.md)
 - **GeriCode** : D:\DO\WEB\TOOLS\L2-PLATFORM\GeriCode (meta-repo, config Agent Manager, KIX, TRIX bridges)
 - **Agent Manager** : version issue de GeriCode V9.9 - worktree placement bug + silent failure
 
 ---
 
 *Genere automatiquement depuis l'architecture Buzz@block le 2026-08-17.
-v1.5 - 2026-08-17 : ADR TRIX/KIX accepted + tables ajoutees dans schema.sql.
+v1.5 - 2026-08-17 : Implementation complete - ADR TRIX/KIX accepted, schema SQL BUZZ-X overlay, tests passent.
 v1.4 - 2026-08-17 : Implementation TRIX/KIX dans Buzz@block (kind.rs + schema SQL optionnel).
 v1.3 - 2026-08-17 : P5 complete + ADR Git Arbiter.
 v1.2 - 2026-08-17 : Mise a jour etat implementation - P5.5 termine, commits documentes, tests passes.

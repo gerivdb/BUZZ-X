@@ -165,7 +165,7 @@ TRIX et KIX ne sont pas de simples consommateurs du bus Buzz. Ils en sont les **
 | **P2** | kinds core (9, 7, 20001, 20002, 9000-9002, 39000-39002) | [OK] Fait | P1 |
 | **P3** | Integration TALEX (`BuzzEventReader` local) | [OK] Fait | P2 |
 | **P4** | Adapteur Postgres/Redis pour `BuzzEventReader` | [OK] Fait | P3 |
-| **P5** | Integration runners cognitifs (LLUX, TIMX, TLM-LANG, ROOTX, RLM-243) | [PARTIEL] ~2 jours restants | P4 |
+| **P5** | Integration runners cognitifs (LLUX, TIMX, TLM-LANG, ROOTX, RLM-243) | [OK] Implante | P4 |
 | **P5.5** | **Integration TRIX + KIX (gouvernance + lifecycle)** | **[OK] Implante** | **P4, TRIX deploye, KIX deploye** |
 | **P6** | CLI `x-forge analyze buzz` + health-check bus | [OK] Fait | P4 |
 | **P7** | Rapport integre Agent Manager + Buzz | [OK] Fait | P6 |
@@ -185,9 +185,11 @@ TRIX et KIX ne sont pas de simples consommateurs du bus Buzz. Ils en sont les **
 | `reports/buzz-conversation-integration.md` | Markdown | Revue HITL |
 | `reports/agent-manager-buzz-integration.md` | Markdown | Revue HITL |
 | `tests/test_buzz_kinds.py` | Python | 6 tests unitaires (mapping 25 kinds, ingest TRIX/KIX) |
+| `tests/test_runners_p5.py` | Python | 7 tests unitaires (LLUX, TIMX, TLM-LANG, ROOTX, RLM-243, KIX, TRIX) |
 | `docs/trix-kix-extension-schema.md` | Markdown | Schema SQL optionnel pour kinds proposes TRIX/KIX |
-| **Kinds TRIX/KIX** : TRIX-GOV-001 (50001), TRIX-ARB-001 (50002), KIX-LC-001 (60001) | **Mapping TALEX + schema optionnel** | **Mapping TALEX valide (6 tests passent), schema documente, ADR en attente** |
-| **BUZZ-X/PRD-MOC/PRD-MOC-BUZZ-X-BUS-2026-08-17.md** | Markdown | Gouvernance validee (v1.1, TRIX/KIX ajoutes) |
+| **Kinds TRIX/KIX** : TRIX-GOV-001 (50001), TRIX-ARB-001 (50002), KIX-LC-001 (60001) | **Mapping TALEX + schema optionnel** | **Mapping TALEX valide (13 tests passent), schema documente, ADR propose** |
+| **ADR-TRIX-GIT-ARBITER** | **ADR** | **Proposed (commit e7ddfd47, GOVERNANCE-HUB)** |
+| **BUZZ-X/PRD-MOC/PRD-MOC-BUZZ-X-BUS-2026-08-17.md** | Markdown | Gouvernance validee (v1.2, TRIX/KIX ajoutes) |
 
 ---
 

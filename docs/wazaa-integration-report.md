@@ -1,3 +1,11 @@
+---
+intent_hash: 0x68d067cfa49c05f4
+created: 2026-11-18T01:18:27Z
+profil: TOOL
+role: canal_communication
+source_repo: gerivdb/BUZZ-X
+status: active
+---
 # Rapport — Exploitation de Buzz@block via BUZZ-X pour WAZAA
 
 **Date** : 2026-07-31  

@@ -1,3 +1,11 @@
+---
+intent_hash: 0xf50b6392d370ed78
+created: 2026-11-18T01:18:27Z
+profil: TOOL
+role: canal_communication
+source_repo: gerivdb/BUZZ-X
+status: active
+---
 # Extraction sémantique Buzz@block vs WAZAA
 
 ## 1. Sémantique Buzz@block (extraite du code)

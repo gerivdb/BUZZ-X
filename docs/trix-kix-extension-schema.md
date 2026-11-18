@@ -1,3 +1,11 @@
+---
+intent_hash: 0x0fa83aabf8548675
+created: 2026-11-18T01:18:27Z
+profil: TOOL
+role: canal_communication
+source_repo: gerivdb/BUZZ-X
+status: active
+---
 # Extension schema TRIX/KIX - Bus Buzz
 
 ## Statut

@@ -1,3 +1,11 @@
+---
+intent_hash: 0xae001fb6f5d89dcf
+created: 2026-11-18T01:18:27Z
+profil: TOOL
+role: canal_communication
+source_repo: gerivdb/BUZZ-X
+status: active
+---
 # Architecture — BUZZ-X
 
 **Dernière mise à jour :** 2026-07-31  

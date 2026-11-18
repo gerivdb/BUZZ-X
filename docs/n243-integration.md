@@ -1,3 +1,11 @@
+---
+intent_hash: 0x1a8ebac745c27304
+created: 2026-11-18T01:18:27Z
+profil: TOOL
+role: canal_communication
+source_repo: gerivdb/BUZZ-X
+status: active
+---
 # Relation BUZZ-X ↔ N243
 
 **Date** : 2026-07-31  
